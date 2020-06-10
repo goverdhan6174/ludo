@@ -3,7 +3,11 @@ import Crush from './crush/index'
 
 function App() {
   return (
-    <Crush />
+    <div className="App">
+    <section>
+      <Crush />
+    </section>
+    </div>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import imgArr from "./helper/images";
-import InstaLogo from '../../assets/svg/instagram.svg';
+import InstaLogo from '../assets/svg/instagram.svg';
 
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
