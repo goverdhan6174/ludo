@@ -1,32 +1,27 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import Header from "./Header";
 import Home from "./Home";
 import AboutHer from "./AboutHer";
 import VideoSection from "./VideoSection";
 import Footer from "./Footer";
-import { cursor, onMouseMove } from "./helper/cursor";
-
+import useMobileDetect from "./helper/useMobileDetect";
+import Cursor from "./helper/cursor";
 
 function Crush() {
-  let [cursorState, setCursorState] = useState(false);
-  let pointer = useRef(null);
+  const { isMobile } = useMobileDetect();
+  
+  // @TODO:// find a better way to setCursorState to implement in Cursor Component
+  let [cursorState, setCursorState] = useState("default");
 
   useEffect(() => {
-    window.addEventListener("mousemove", e => onMouseMove(e , pointer));
-    return () => {
-      window.removeEventListener("mousemove", e => onMouseMove(e , pointer));
-    }
-  }, [])
-
-  useEffect(() => {
-    cursor(pointer,cursorState);
-  }, [cursorState])
-
-
+   if(isMobile()){
+     setCursorState("hideCursor");
+   }
+  }, [cursorState , isMobile])
 
   return (
     <>
-      <div id="cursor" ref={pointer}></div>
+     <Cursor cursorState={cursorState} />
       <Header setCursorState={setCursorState} />
       <Home />
       <AboutHer />

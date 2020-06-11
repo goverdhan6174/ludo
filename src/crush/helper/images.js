@@ -19,11 +19,8 @@ import image17 from "../../assets/crushImages/17.jpg"
 import image18 from "../../assets/crushImages/18.jpg"
 import image19 from "../../assets/crushImages/19.jpg"
 import image20 from "../../assets/crushImages/20.jpg"
-
-
-export default 
   
-    [
+export default  [
         {id : 1 , src: image01 , desc: "I don't have description"},
         {id : 2 , src: image02 , desc: "I don't have description"},
         {id : 3 , src: image03 , desc: "I don't have description"},
