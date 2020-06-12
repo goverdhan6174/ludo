@@ -9,7 +9,6 @@ import useMobileDetect from "./helper/useMobileDetect";
 function Header({ setCursorState }) {
     const { isMobile } = useMobileDetect();
     const isMobileDevice = isMobile();
-
     let [isVisible, setVisibility] = useState(false);
     let [animObj, setAnimObj] = useState({});
     let [mixBlendMode, setMixBlendMode] = useState("soft-light")
@@ -47,7 +46,7 @@ function Header({ setCursorState }) {
                     onHoverEnd={onMouseLeave}
                     onMouseLeave={onMouseLeave}
                 >
-                    <img src={imgArr[2].src} alt="" id="firstCrushBg" style={{ mixBlendMode: mixBlendMode }} />
+                    <img src={imgArr[15].src} alt="" id="firstCrushBg" style={{ mixBlendMode: mixBlendMode }} />
                 </motion.div>
                 <div className="crushHalfContainer">
                     <img src={imgArr[19].src} alt="" id="secCrushBg" />

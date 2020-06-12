@@ -30,11 +30,11 @@ function Footer({ setCursorState }) {
         <div className="crushContainer" ref={containerRef}>
 
             <div className="flex3 imgBox flexColumn" >
-                <motion.img src={imgArr[13].src} className="flexCenter crushImgs" alt="" initial="hidden" animate={animation} variants={animationVariants(0, -10)} />
+                <motion.img src={imgArr[2].src} className="flexCenter crushImgs" alt="" initial="hidden" animate={animation} variants={animationVariants(0, -10)} />
             </div>
 
             <motion.div className="flex3 imgBox crushFollowflexColumn" initial="hidden" animate={animation} variants={animationVariants(0, 10)} >
-                <motion.img src={imgArr[13].src} className="flexCenter crushImgs" alt="" />
+                <motion.img src={imgArr[0].src} className="flexCenter crushImgs" alt="" />
                 <p className="crushFollowText">Hain saari pics and video ish site pe mile wali tumko?</p>
                 <p className="crushFollowText">Go follow her on Instagram</p>
                 <button id="crushFollowButton" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
@@ -44,7 +44,7 @@ function Footer({ setCursorState }) {
             </motion.div>
 
             <div className="flex3 imgBox flexColumn" >
-                <motion.img src={imgArr[13].src} className="flexCenter crushImgs" alt="" initial="hidden" animate={animation} variants={animationVariants(0, -10)} />
+                <motion.img src={imgArr[4].src} className="flexCenter crushImgs" alt="" initial="hidden" animate={animation} variants={animationVariants(0, -10)} />
             </div>
 
             <motion.div className="crushFootBg crushFootRight" initial="hidden" animate={animation} variants={animationVariants(60, 0, 1, 0.6, 4)} ></motion.div>
