@@ -39,14 +39,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 #firstCrushBg {
-  width: 100vw;
-  height: 100vh;
   object-fit: cover;
-  mix-blend-mode: soft-light;
   z-index: 2;
+  opacity: 1 !important;
 }
 
 #secCrushBg {
@@ -69,6 +68,7 @@
   background-color: dodgerblue;
   color: whitesmoke;
   z-index: 10;
+  pointer-events: none;
 }
 
 #firstCrushLinesContainer {

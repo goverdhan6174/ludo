@@ -5,18 +5,13 @@ import InstaLogo from '../assets/svg/instagram.svg';
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { animationVariants } from './helper/animationVariants';
-import useMobileDetect from './helper/useMobileDetect';
-
-
-
-
 
 // Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 function Footer({ setCursorState }) {
-    const {isMobile} = useMobileDetect();
+
     const animation = useAnimation();
-    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile()? "-60%" :"-50%"  });
+    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin:"-40%"  });
 
     useEffect(() => {
         if (inView) {
