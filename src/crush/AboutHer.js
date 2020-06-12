@@ -3,11 +3,12 @@ import imgArr from "./helper/images";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { animationVariants } from './helper/animationVariants';
+import useMobileDetect from './helper/useMobileDetect';
 
 function AboutHer() {
-
+    const { isMobile } = useMobileDetect();
     const animation = useAnimation();
-    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin: "-30%" });
+    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile()? "-40%" :"-30%" });
 
     useEffect(() => {
         if (inView) {

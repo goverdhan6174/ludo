@@ -4,13 +4,15 @@ import { useInView } from "react-intersection-observer";
 import imgArr from "./helper/images";
 import HoverImage from './HoverImage';
 import { animationVariants } from './helper/animationVariants';
+import useMobileDetect from './helper/useMobileDetect';
 
 function Home() {
+    const {isMobile} = useMobileDetect();
     let [hoverImg, setHoverImg] = useState(false);
     let [imgIndex, setImgIndex] = useState(0);
     let [displayImgs, setdisplayImgs] = useState(true);
     let animation = useAnimation();
-    let [homeRef, inView] = useInView({ triggerOnce: true, rootMargin: "-30%" });
+    let [homeRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile()? "-40%" :"-30%"  });
 
     useEffect(() => {
         if (inView) {

@@ -5,6 +5,7 @@ import InstaLogo from '../assets/svg/instagram.svg';
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { animationVariants } from './helper/animationVariants';
+import useMobileDetect from './helper/useMobileDetect';
 
 
 
@@ -13,8 +14,9 @@ import { animationVariants } from './helper/animationVariants';
 // Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
 
 function Footer({ setCursorState }) {
+    const {isMobile} = useMobileDetect();
     const animation = useAnimation();
-    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin: "-30%" });
+    const [containerRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile()? "-60%" :"-50%"  });
 
     useEffect(() => {
         if (inView) {
