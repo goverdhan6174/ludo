@@ -374,10 +374,8 @@ blockquote {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vmin;
-  height: 60vmin;
+  max-width: 100vmin;
   overflow: hidden;
-  padding: 0 10px 10px
 }
 
 #crushVideoThumbnail {

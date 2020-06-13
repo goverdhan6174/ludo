@@ -14,14 +14,14 @@ function VideoSection() {
     useEffect(() => {
         if (inView) {
             animation.start("visible");
-            setVideoPlaying(true);
+            setVideoPlaying(false);
         }
     }, [inView, animation])
 
     return (
         <div className="crushVideoSection" ref={containerRef}>
-            <motion.div className="crushVideoContianer" animate={animation} initial={"hidden"} variants={animationVariants(0, 0, 0.95)}>
-                <ReactPlayer url='https://www.youtube.com/watch?v=h8MzocnmCyQ' playing={isVideoPlaying}/>
+            <motion.div className="crushVideoContianer" animate={animation} initial={"hidden"} variants={animationVariants(0, 0, 0.95)} >
+                <ReactPlayer url='https://www.youtube.com/watch?v=h8MzocnmCyQ' playing={isVideoPlaying} />
             </motion.div>
             <motion.blockquote id="crushFewLinesAboutVideo" animate={animation} initial={"hidden"} variants={animationVariants(0, 30, 1, 0.8, 3)}>
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
