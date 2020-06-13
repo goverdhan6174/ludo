@@ -5,8 +5,10 @@ import "./crush.css";
 import imgArr from "./helper/images";
 import { animationVariants } from "./helper/animationVariants";
 import useMobileDetect from "./helper/useMobileDetect";
+import useWindowSize from "./helper/useWindowSize";
 
 function Header({ setCursorState }) {
+    let windowSize = useWindowSize();
     const { isMobile } = useMobileDetect();
     const isMobileDevice = isMobile();
     let [isVisible, setVisibility] = useState(false);
@@ -14,7 +16,7 @@ function Header({ setCursorState }) {
     let [mixBlendMode, setMixBlendMode] = useState("soft-light")
 
     useEffect(() => {
-        if (isMobileDevice) {
+        if (isMobileDevice || windowSize.width < 600 ) {
             setMixBlendMode("normal")
             setAnimObj({
                 x: 0,  y: "-100%", xTo: 0,  yTo: "100%"
@@ -24,7 +26,7 @@ function Header({ setCursorState }) {
                 x: "100%", y: 0, xTo: "-100%", yTo: 0
             })
         }
-    }, [isMobileDevice])
+    }, [isMobileDevice , windowSize])
 
     const onMouseEnter = () => {
         setCursorState("increaseSize");

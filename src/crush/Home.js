@@ -8,17 +8,35 @@ import useMobileDetect from './helper/useMobileDetect';
 
 function Home() {
     const { isMobile } = useMobileDetect();
+    const bgcolor = ["#ee5253", "#10ac84", "#0abde3", "#ff9f43", "#f368e0", "#1dd1a1", "#48dbfb", "#ff6b6b", "#feca57", "#222f3e", "#341f97", "#341f97", "#01a3a4", "#5f27cd", "#c8d6e5", "#54a0ff"];
+
+    let [bgColNumber, setBgColNumber] = useState(0);
     let [hoverImg, setHoverImg] = useState(false);
     let [imgIndex, setImgIndex] = useState(0);
     let [displayImgs, setdisplayImgs] = useState(true);
+    let [randomImg, setRandomImg] = useState([0, 0, 0]);
     let animation = useAnimation();
     let [homeRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile() ? "-40%" : "-30%" });
+
+    useEffect(() => {
+        let randomImgSet = new Set();
+        for (let i = 0; randomImgSet.size < 3; i++) {
+            let randomNumber = Math.floor(Math.random() * imgArr.length);
+            randomImgSet.add(randomNumber);
+        }
+        setRandomImg([...randomImgSet])
+    }, [])
 
     useEffect(() => {
         if (inView) {
             animation.start("visible")
         }
     }, [inView, animation])
+
+    const handleBackgroundColor = () => {
+        let randomNumber = Math.floor(Math.random() * bgcolor.length);
+        setBgColNumber(randomNumber);
+    }
 
     const onHoverImgStarts = (imgUrl, index) => {
         setHoverImg(imgUrl);
@@ -27,6 +45,7 @@ function Home() {
     }
 
     const onHoverImgEnds = () => {
+        handleBackgroundColor()
         setHoverImg(false);
         setImgIndex(0)
         setdisplayImgs(true);
@@ -35,7 +54,7 @@ function Home() {
 
     return (
 
-        <motion.div className="crushContainer" id="crushHomePage" ref={homeRef}>
+        <motion.div className="crushContainer" id="crushHomePage" ref={homeRef} style={{ backgroundColor: `${bgcolor[bgColNumber]}` }} onTap = {handleBackgroundColor} onClick = {handleBackgroundColor}>
             {/* //@TODO: remove hoverimg state, on Tap */}
             <AnimatePresence exitBeforeEnter>
                 {hoverImg && <motion.img src={hoverImg ? hoverImg : imgArr[2]} alt="" style={{ position: "absolute", left: 0, height: "100%", width: "100%", objectFit: "cover", filter: "blur(3px)" }} initial="hidden" animate={hoverImg ? "visible" : "hidden"} variants={animationVariants(0, 0, 1.1, 0, 1)} exit="hidden" />}
@@ -63,7 +82,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 1 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 1 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage img={imgArr[17]} align="crushLeft" animate={animation} variants={animationVariants(0, -10, 1, 0.8)} exit="hidden" index={1} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[randomImg[0]]} align="crushLeft" animate={animation} variants={animationVariants(0, -10, 1, 0.8)} exit="hidden" index={1} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
                 </div>
@@ -72,7 +91,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 2 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 2 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage img={imgArr[13]} align="crushCenter" animate={animation} variants={animationVariants(0, 0, 0.97, 0.8)} exit="hidden" index={2} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[randomImg[1]]} align="crushCenter" animate={animation} variants={animationVariants(0, 0, 0.97, 0.8)} exit="hidden" index={2} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
                 </div>
@@ -81,7 +100,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 3 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 3 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage img={imgArr[16]} align="crushRight" animate={animation} variants={animationVariants(0, 10, 1, 0.8)} index={3} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[randomImg[2]]} align="crushRight" animate={animation} variants={animationVariants(0, 10, 1, 0.8)} index={3} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
 

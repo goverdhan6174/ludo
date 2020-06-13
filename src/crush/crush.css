@@ -147,9 +147,9 @@ blockquote {
 
 #crushHomePage {
   height: 100vh;
-  width: 100vw;
-  background-color: navy;
+  width: 100vw; 
   overflow: hidden;
+  transition: background ease-in-out 400ms;
 }
 
 .crushText {
@@ -249,16 +249,14 @@ blockquote {
   position: absolute;
   font-family: "Bebas Neue", cursive;
   letter-spacing: 0.1rem;
-  font-size: 10vmin;
+  font-size: 7vmin;
   transform-origin: center;
   top: 50%;
   width: 100vw;
-  transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
   mix-blend-mode: difference;
-  color: whitesmoke;
-  background-color: transparent;
+  color: black !important;
   pointer-events: none;
 }
 
