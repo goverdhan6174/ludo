@@ -46,3 +46,7 @@ code {
   display: none;
 }
 
+.paddingHorizontal{
+  padding : 0 10vmin;
+}
+

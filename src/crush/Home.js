@@ -7,12 +7,12 @@ import { animationVariants } from './helper/animationVariants';
 import useMobileDetect from './helper/useMobileDetect';
 
 function Home() {
-    const {isMobile} = useMobileDetect();
+    const { isMobile } = useMobileDetect();
     let [hoverImg, setHoverImg] = useState(false);
     let [imgIndex, setImgIndex] = useState(0);
     let [displayImgs, setdisplayImgs] = useState(true);
     let animation = useAnimation();
-    let [homeRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile()? "-40%" :"-30%"  });
+    let [homeRef, inView] = useInView({ triggerOnce: true, rootMargin: isMobile() ? "-40%" : "-30%" });
 
     useEffect(() => {
         if (inView) {
@@ -35,10 +35,10 @@ function Home() {
 
     return (
 
-        <motion.div className="crushContainer" id="crushHomePage" ref={homeRef} >
-
+        <motion.div className="crushContainer" id="crushHomePage" ref={homeRef}>
+            {/* //@TODO: remove hoverimg state, on Tap */}
             <AnimatePresence exitBeforeEnter>
-                {hoverImg && <motion.img src={hoverImg ? hoverImg : imgArr[2].src} alt="" style={{ position: "absolute", left: 0, height: "100%", width: "100%", objectFit: "cover", filter: "blur(3px)" }} initial="hidden" animate={hoverImg ? "visible" : "hidden"} variants={animationVariants(0, 0, 1.1, 0, 1)} exit="hidden" />}
+                {hoverImg && <motion.img src={hoverImg ? hoverImg : imgArr[2]} alt="" style={{ position: "absolute", left: 0, height: "100%", width: "100%", objectFit: "cover", filter: "blur(3px)" }} initial="hidden" animate={hoverImg ? "visible" : "hidden"} variants={animationVariants(0, 0, 1.1, 0, 1)} exit="hidden" />}
             </AnimatePresence>
 
             <motion.p className="crushText" animate={animation} initial={"hidden"} variants={animationVariants(-30)}> CRUSH </motion.p>
@@ -63,7 +63,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 1 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 1 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage imgUrl={imgArr[17].src} align="crushLeft" animate={animation} variants={animationVariants(0, -10, 1, 0.8)} exit="hidden" index={1} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[17]} align="crushLeft" animate={animation} variants={animationVariants(0, -10, 1, 0.8)} exit="hidden" index={1} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
                 </div>
@@ -72,7 +72,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 2 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 2 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage imgUrl={imgArr[13].src} align="crushCenter" animate={animation} variants={animationVariants(0, 0, 0.97, 0.8)} exit="hidden" index={2} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[13]} align="crushCenter" animate={animation} variants={animationVariants(0, 0, 0.97, 0.8)} exit="hidden" index={2} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
                 </div>
@@ -81,7 +81,7 @@ function Home() {
                     <AnimatePresence exitBeforeEnter>
                         {(imgIndex === 3 || displayImgs) &&
                             <motion.div initial="visible" animate={(imgIndex === 3 || displayImgs) ? "visible" : "hidden"} variants={animationVariants(0, 0, 1, 0, 1)} exit="hidden" >
-                                <HoverImage imgUrl={imgArr[16].src} align="crushRight" animate={animation} variants={animationVariants(0, 10, 1, 0.8)} index={3} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
+                                <HoverImage img={imgArr[16]} align="crushRight" animate={animation} variants={animationVariants(0, 10, 1, 0.8)} index={3} onHoverStarts={onHoverImgStarts} onHoverEnds={onHoverImgEnds} />
                             </motion.div>}
                     </AnimatePresence>
 
