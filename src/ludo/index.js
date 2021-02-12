@@ -85,33 +85,34 @@ function Ludo() {
   }, []);
 
   return (
-    <>
-      {!isBoardLoaded && <LudoHomePage socket={socket.current} />}
-      {isBoardLoaded && <LudoApp />}
-      {isBoardLoaded && (
-        <div style={{ position: "absolute", top: "50%" }}>
-          {roomInfo.admin === userId ? (
-            <button
-              type="button"
-              name="start"
-              onClick={handleButtonClick}
-              style={{ position: "relative" }}
-            >
-              Start
-            </button>
-          ) : (
-            <button
-              type="button"
-              name="ready"
-              onClick={handleButtonClick}
-              style={{ position: "relative" }}
-            >
-              Ready
-            </button>
-          )}
-        </div>
-      )}
-    </>
+    <LudoApp />
+    // <>
+    //   {!isBoardLoaded && <LudoHomePage socket={socket.current} />}
+    //   {isBoardLoaded && <LudoApp />}
+    //   {isBoardLoaded && (
+    //     <div style={{ position: "absolute", top: "50%" }}>
+    //       {roomInfo.admin === userId ? (
+    //         <button
+    //           type="button"
+    //           name="start"
+    //           onClick={handleButtonClick}
+    //           style={{ position: "relative" }}
+    //         >
+    //           Start
+    //         </button>
+    //       ) : (
+    //         <button
+    //           type="button"
+    //           name="ready"
+    //           onClick={handleButtonClick}
+    //           style={{ position: "relative" }}
+    //         >
+    //           Ready
+    //         </button>
+    //       )}
+    //     </div>
+    //   )}
+    // </>
   );
 }
 
