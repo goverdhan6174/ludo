@@ -3,30 +3,26 @@
 *,
 *:focus {
   outline: none;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
-
 
 body {
   color: #3c4246;
   margin: 0;
-  font-family:  "Roboto", BlinkMacSystemFont, "Segoe UI","Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .App {
-  cursor: none;
+  /* cursor: none; */
   position: relative;
   text-align: center;
   overflow-x: hidden;
@@ -36,17 +32,16 @@ code {
     circle,
     #fdfbfb,
     #f9f7f8,
-    #F3F3F5,
+    #f3f3f5,
     #f0f0f2,
     #ebedee
   );
 }
 
-.displayNone{
+.displayNone {
   display: none;
 }
 
-.paddingHorizontal{
-  padding : 0 10vmin;
+.paddingHorizontal {
+  padding: 0 10vmin;
 }
-

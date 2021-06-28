@@ -5,7 +5,7 @@ import Ludo from "./ludo/index";
 function App() {
   return (
     <div className="App">
-      <section>
+      <section style={{ height: "100vh", padding: "auto" , display : 'flex' ,  }}>
         <Ludo />
       </section>
     </div>

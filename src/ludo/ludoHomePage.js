@@ -4,15 +4,14 @@ import { useEffect } from "react";
 
 export default function LudoHomePage({ socket }) {
   const [state, setState] = useState({ username: "", roomId: "" });
-  const [failure, setFailure] = useState(false);
+  const [failure, setFailure] = useState("");
 
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("fail", (reason) => {
+    socket.on("loginFail", (reason) => {
       setFailure(reason);
     });
-
   }, [socket]);
 
   let handleButtonClick = (event) => {
