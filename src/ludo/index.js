@@ -112,6 +112,7 @@ function Ludo() {
         let userIndex = prevInfo.users.findIndex((user) => {
           if (!user) return false;
           if (user.id === socketId) return true;
+          return false;
         });
         if (userIndex !== -1) {
           gameController.current.rollDice(steps);
