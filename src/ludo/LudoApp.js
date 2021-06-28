@@ -4,20 +4,23 @@ import useCanvas from "./helper/useCanvas";
 import LudoController from "./ludoController";
 import LudoBoard from "./ludoBoard";
 import svgToImg64 from "./helper/svgToImg64";
+
 import useWindowSize from "./helper/useWindowSize";
 
-function LudoApp() {
+function LudoApp({ btnHandler, ludoController, users, roomId, socket }) {
   const canvasRef = React.useRef();
   const context2DRef = React.useRef();
 
+  const gameWazir = React.useRef();
+  // const players = React.useRef();
+  const players = ludoController;
+  const currentPlayerIndex = React.useRef();
+
+  const wazirImgArray = React.useRef();
   const wazirYellowSVGRef = React.useRef();
   const wazirBlueSVGRef = React.useRef();
   const wazirRedSVGRef = React.useRef();
   const wazirGreenSVGRef = React.useRef();
-
-  const gameWazir = React.useRef();
-  const players = React.useRef();
-  const currentPlayerIndex = React.useRef();
 
   let windowSize = useWindowSize();
   let context2D = useCanvas(canvasRef);
@@ -32,22 +35,12 @@ function LudoApp() {
       context2DRef.current = context2D;
       context2DRef.current.save();
       context2DRef.current.clearRect(0, 0, canvasSize, canvasSize);
-
-      let yellowImg = svgToImg64(wazirYellowSVGRef.current);
-      let blueImg = svgToImg64(wazirBlueSVGRef.current);
-      let redImg = svgToImg64(wazirRedSVGRef.current);
-      let greenImg = svgToImg64(wazirGreenSVGRef.current);
-
-      players.current = new LudoController(canvasUnit, context2DRef.current);
-      players.current.addPlayer(yellowImg);
-      players.current.addPlayer(blueImg);
-      players.current.addPlayer(redImg);
-      players.current.addPlayer(greenImg);
-      LudoController.setStaticControllerToWazir(
-        players.current,
+      players.current = new LudoController(
+        roomId,
+        socket.id,
+        canvasUnit,
         context2DRef.current
       );
-
       currentPlayerIndex.current = players.current.currentPlayerIndex;
 
       let lastTime = 0;
@@ -70,7 +63,7 @@ function LudoApp() {
       if (requestAnimFrameId !== undefined)
         window.cancelAnimationFrame(requestAnimFrameId);
     };
-  }, [context2D]);
+  }, [context2D, socket, canvasSize, canvasUnit, players, roomId]);
 
   React.useEffect(() => {
     setCanvasSize(Math.floor(canvasRef.current.clientWidth));
@@ -83,21 +76,48 @@ function LudoApp() {
         context2DRef.current
       );
     }
-  }, [windowSize, context2D]);
+  }, [windowSize, context2D, canvasUnit, players]);
+
+  React.useEffect(() => {
+    //SvgImg : [ yellowSVG =>>blueSVG =>>redSVG =>>greenSVG ]
+    wazirImgArray.current = [
+      svgToImg64(wazirYellowSVGRef.current),
+      svgToImg64(wazirBlueSVGRef.current),
+      svgToImg64(wazirRedSVGRef.current),
+      svgToImg64(wazirGreenSVGRef.current),
+    ];
+  }, [socket.id]);
+
+  React.useEffect(() => {
+    if (users && players.current && users.length > 0) {
+      users.forEach((user, index) => {
+        if (user) {
+          players.current.addPlayer(index, wazirImgArray.current[index]);
+        }
+      });
+      LudoController.setStaticControllerToWazir(
+        players.current,
+        context2DRef.current
+      );
+    }
+  }, [users, socket.id, players]);
 
   return (
     <>
-      {/* <svg ref={wazirSVGRef} width="1.5em" height="1.5em" style={{ display: "none"}} viewBox="0 0 16 16" fill="#FF3366">
-        <path fillRule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-      </svg> */}
-      {/* <a href="https://iconscout.com/icons/location" target="_blank">Location Icon</a> by <a href="https://iconscout.com/contributors/jemismali">Jemis Mali</a> on <a href="https://iconscout.com">Iconscout</a> */}
       <LudoBoard
         canvasRef={canvasRef}
         canvasUnit={canvasUnit}
         gameWazir={gameWazir}
         players={players}
         currentPlayerIndex={currentPlayerIndex}
+        btnHandler={btnHandler}
+        socket={socket}
       />
+
+      {/* <svg ref={wazirSVGRef} width="1.5em" height="1.5em" style={{ display: "none"}} viewBox="0 0 16 16" fill="#FF3366">
+        <path fillRule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+      </svg> */}
+      {/* <a href="https://iconscout.com/icons/location" target="_blank">Location Icon</a> by <a href="https://iconscout.com/contributors/jemismali">Jemis Mali</a> on <a href="https://iconscout.com">Iconscout</a> */}
 
       <svg
         ref={wazirYellowSVGRef}

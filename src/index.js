@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Ludo from "./ludo";
-// import App from './App';
+// import Ludo from "./ludo";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Ludo />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

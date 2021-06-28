@@ -13,10 +13,12 @@ h1 {
   color: #363639;
   font-size: 4rem;
   font-weight: 500;
+  margin: 1rem 0;
 }
 
 .form-container {
   min-width: 360px;
+  max-width: 480px;
   background-color: whitesmoke;
   margin: auto;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1), 0 2px 1px 0 rgba(0, 0, 0, 0.14);
@@ -92,4 +94,13 @@ button {
 
 button:disabled {
   cursor: default;
+  padding: 15px;
+  width: 48%;
+  font-size: 1.1rem;
+  /* background: #4caf50; */
+  background-color: #525252;
+  color: whitesmoke;
+  cursor: pointer;
+  border: 0;
+  border-radius: 2px;
 }

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import useMousePosition from "./helper/useMousePosition";
 import ludoImg from "../assets/ludoimages/ludoBoard.png";
-import { useState } from "react";
 
-function LudoBoard({ canvasRef, canvasUnit, players }) {
+function LudoBoard({ canvasRef, canvasUnit, players, btnHandler, socket }) {
   let mouseCoor = useMousePosition(canvasRef);
-  let [diceInput, setDiceInput] = useState(0);
+  // let [diceInput, setDiceInput] = useState(0);
 
   useEffect(() => {
     let keypressHandler = () => {
@@ -14,11 +13,19 @@ function LudoBoard({ canvasRef, canvasUnit, players }) {
 
     document.addEventListener("keypress", keypressHandler);
     return () => document.removeEventListener("keypress", keypressHandler);
-  }, []);
+  }, [players]);
 
   useEffect(() => {
-    if (players.current) players.current.moveWazir(mouseCoor);
-  }, [mouseCoor]);
+    if (!socket) return;
+    if (players.current) {
+      let clickedWazir = players.current.moveWazir(mouseCoor);
+      //emit "moveWazir" with arg clickedWazir
+      if (socket === undefined) return;
+      if (typeof clickedWazir !== "number") return;
+      socket.emit("moveWazir", players.current.boardId, clickedWazir);
+      // players.current.moveClickedWazir(clickedWazir);
+    }
+  }, [mouseCoor, socket, players]);
 
   return (
     <div
@@ -32,7 +39,7 @@ function LudoBoard({ canvasRef, canvasUnit, players }) {
         alignItems: "center",
       }}
     >
-      <div
+      {/* <div
         style={{
           zIndex: 999,
           display: "flex",
@@ -46,18 +53,20 @@ function LudoBoard({ canvasRef, canvasUnit, players }) {
           value={diceInput}
         />
         <button
-          type="submit"
+          type="button"
+          name="roll"
           style={{ padding: "1rem" }}
-          onClick={() => {
-            if (players.current) {
-              players.current.rollDice(diceInput);
-              setDiceInput(0);
-            }
-          }}
+          onClick={btnHandler}
+          // onClick={() => {
+          //   if (players.current) {
+          //     players.current.rollDice(diceInput);
+          //     setDiceInput(0);
+          //   }
+          // }}
         >
           {["ROLL", "YELLOW", "BLUE", "RED", "GREEN"][0]}
         </button>
-      </div>
+      </div> */}
 
       <div
         style={{

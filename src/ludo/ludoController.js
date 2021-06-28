@@ -1,12 +1,14 @@
 import Player from "./player";
 
 class LudoController {
-  constructor(boardUnit, context) {
+  constructor(gameId, id, boardUnit, context) {
+    this.boardId = gameId;
+    this.playerId = id;
     this.boardUnit = boardUnit;
     this.currentPlayerIndex = 0;
-    this.players = [];
+    this.currentPlayerId = 0;
+    this.players = [null, null, null, null];
     this.hasExtraLife = false;
-    this.gamePath = generatedNextPath();
     this.context = context;
 
     this.allWazirPosition = this.array52X2();
@@ -27,13 +29,10 @@ class LudoController {
     this.safeIndexes = [3, 11, 16, 24, 29, 37, 42, 50];
   }
 
-  addPlayer = (img) => {
-    if (this.players.length > 4) {
-      console.log(`Sorry Board Is Full`);
-      return;
-    }
-    let playerPath = this.gamePath.next().value;
-    this.players.push(new Player(this.boardUnit, img, playerPath));
+  addPlayer = (index, img) => {
+    let playerPath = this.generatedPath(index);
+    this.players[index] = new Player(this.boardUnit, img, playerPath);
+    console.log("new player added");
   };
 
   removePlayer = (playerIndex) => {
@@ -45,7 +44,9 @@ class LudoController {
   changeBoardSize = (boardUnit, context) => {
     this.boardUnit = boardUnit;
     this.context = context;
-    this.players.forEach((player) => player.changeBoardSize(boardUnit));
+    this.players.forEach((player) => {
+      if (player) player.changeBoardSize(boardUnit);
+    });
   };
 
   draw = () => {
@@ -86,9 +87,11 @@ class LudoController {
       this.allWazirPosition[i].forEach((waz) => waz.draw(this.context));
     }
     // drawWazirAreOnSafePath
-    this.players.forEach((player) =>
-      player.drawWazirRestingAtHome(this.context)
-    );
+    this.players.forEach((player) => {
+      if (player) {
+        return player.drawWazirRestingAtHome(this.context);
+      }
+    });
   };
 
   array52X2() {
@@ -103,13 +106,18 @@ class LudoController {
   }
 
   static setStaticControllerToWazir = (controller) => {
-    controller.players.forEach((player) =>
-      player.wazirs.forEach((wazir) => (wazir.controller = controller))
-    );
+    controller.players.forEach((player) => {
+      if (player)
+        player.wazirs.forEach((wazir) => (wazir.controller = controller));
+    });
   };
 
   update = (deltaTime) => {
-    this.players.forEach((player) => player.update(deltaTime));
+    this.players.forEach((player) => {
+      if (player) {
+        return player.update(deltaTime);
+      }
+    });
 
     if (!this.isCurrentPlayerMoving)
       this.selectedWazirs.forEach((waz) => waz.increaseSize(deltaTime));
@@ -246,6 +254,16 @@ class LudoController {
     this.selectedWazirs = [];
     this.currentPlayerNonBoundedWazir = [];
     this.clickedWazir = -1;
+
+    if (
+      this.players[this.currentPlayerIndex] === undefined ||
+      this.players[this.currentPlayerIndex] === null
+    ) {
+      this.currentPlayerIndex += 1;
+      this.currentPlayerIndex = this.currentPlayerIndex % this.players.length;
+      this.reset();
+    }
+
     if (
       this.players[this.currentPlayerIndex].hasPlayerLeftTheGame ||
       this.players[this.currentPlayerIndex].playerStatus === "WIN"
@@ -254,21 +272,30 @@ class LudoController {
   };
 
   rollDice = (diceInput) => {
+    // if (this.currentPlayerId !== this.playerId) {
+    //   console.log("you can't roll the dice");
+    //   return;
+    // }
+
     if (this.isDiceRolled) {
-      console.log(
-        "YOU CAN'T ROLL THE DICE, PLAYER :",
-        ["YELLOW", "BLUE", "RED", "GREEN"][this.currentPlayerIndex]
-      );
+      // console.log(
+      //   "YOU CAN'T ROLL THE DICE, PLAYER :",
+      //   ["YELLOW", "BLUE", "RED", "GREEN"][this.currentPlayerIndex]
+      // );
       return;
     }
 
     if (this.isCurrentPlayerMoving) {
       console.log(`Can't Roll : current player is already moving`);
     }
-    if (this.players[this.currentPlayerIndex].playerStatus === "WIN")
+    if (
+      this.players[this.currentPlayerIndex] === null ||
+      this.players[this.currentPlayerIndex] === undefined ||
+      this.players[this.currentPlayerIndex].playerStatus === "WIN"
+    )
       this.nextPlayer();
 
-    this.rollSteps = Math.ceil(Math.random() * 6);
+    // this.rollSteps = Math.ceil(Math.random() * 6);
     if (diceInput > 0) this.rollSteps = +diceInput;
 
     let NonBoundedWazir = this.players[this.currentPlayerIndex].getWazirs(
@@ -282,12 +309,12 @@ class LudoController {
 
     if (this.rollSteps === 6) this.hasExtraLife = true;
 
-    console.log(
-      "Dice Rolled By ",
-      ["YELLOW", "BLUE", "RED", "GREEN"][this.currentPlayerIndex],
-      " :: ",
-      this.rollSteps
-    );
+    // console.log(
+    //   "Dice Rolled By ",
+    //   ["YELLOW", "BLUE", "RED", "GREEN"][this.currentPlayerIndex],
+    //   " :: ",
+    //   this.rollSteps
+    // );
 
     if (this.currentPlayerNonBoundedWazir.length === 0) this.nextPlayer();
     // if (
@@ -318,6 +345,12 @@ class LudoController {
   };
 
   moveWazir = (mouseCoor) => {
+    // if (this.currentPlayerId !== this.playerId) {
+    //   console.log(this.currentPlayerId, "compare id ", this.playerId);
+    //   console.log("can't move the wazir, but its testing");
+    //   return;
+    // }
+
     let clickedCoordinates = [
       Math.floor(mouseCoor.x / this.boardUnit),
       Math.floor(mouseCoor.y / this.boardUnit),
@@ -338,18 +371,29 @@ class LudoController {
       clickedCoordinates
     );
 
-    if (this.currentPlayerNonBoundedWazir.includes(this.clickedWazir)) {
+    // this.moveClickedWazir(this.clickedWazir, this.rollSteps);
+    // console.log(this.clickedWazir);
+    // return the index of wazir has clicked
+    return this.clickedWazir;
+  };
+
+  moveClickedWazir = (wazirIndex, playerId) => {
+    if (this.currentPlayerId !== playerId) {
+      console.log("you can't move the wazir");
+      return;
+    }
+    if (this.currentPlayerNonBoundedWazir.includes(wazirIndex)) {
       this.selectedWazirs.forEach((waz) => waz.resetImg());
       this.selectedWazirs = [];
       this.players[this.currentPlayerIndex].updateWazirPosition(
-        this.clickedWazir,
+        wazirIndex,
         this.rollSteps
       );
       // this.nextPlayer();
     } else {
       console.log(
         "CLICK AGAIN :: ",
-        this.clickedWazir,
+        wazirIndex,
         this.currentPlayerNonBoundedWazir
       );
     }
@@ -363,16 +407,125 @@ class LudoController {
     }
 
     this.reset();
-    console.log("NEXT PLAYER UPDATE ");
+    // console.log("NEXT PLAYER UPDATE ");
 
     this.currentPlayerIndex++;
     this.currentPlayerIndex = this.currentPlayerIndex % this.players.length;
 
     if (
+      this.players[this.currentPlayerIndex] === undefined ||
+      this.players[this.currentPlayerIndex] === null
+    ) {
+      this.currentPlayerIndex += 1;
+      this.currentPlayerIndex = this.currentPlayerIndex % this.players.length;
+      this.reset();
+    }
+    if (
       this.players[this.currentPlayerIndex].hasPlayerLeftTheGame ||
       this.players[this.currentPlayerIndex].playerStatus === "WIN"
     )
       this.nextPlayer();
+  };
+
+  generatedPath = (playerIndex) => {
+    //return path : [ yellowGamePath =>>blueGamePath =>>redGamePath =>>greenGamePath ]
+
+    const playerCoordinates = [
+      { x: 13, y: 4 },
+      { x: 13, y: 13 },
+      { x: 4, y: 13 },
+      { x: 4, y: 4 },
+    ];
+
+    const gateCoordinates = [
+      [9, 2],
+      [14, 9],
+      [7, 14],
+      [2, 7],
+    ];
+
+    //Current position vector pointed towards Force To Be Applied and Starts from Top to Green Home
+    const vectors = [
+      [1, 0],
+      [1, 0],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [1, 1],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [0, 1],
+      [0, 1],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [-1, 1],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [0, 1],
+      [-1, 0],
+      [-1, 0],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+      [-1, -1],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [-1, 0],
+      [0, -1],
+      [0, -1],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [1, 0],
+      [1, -1],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+      [0, -1],
+    ];
+
+    //current position vector pointed towards negative force to be applied
+    let negForceVectors;
+    let forceVectors;
+
+    let oldForceVectors = [...vectors];
+
+    let wrappingNumber = (28 + 13 * playerIndex) % 52;
+    negForceVectors = oldForceVectors.slice(wrappingNumber);
+    negForceVectors.push(...oldForceVectors.slice(0, wrappingNumber));
+
+    forceVectors = oldForceVectors.splice(3 + 13 * playerIndex);
+    oldForceVectors.splice(-2, 1);
+    forceVectors.push(...oldForceVectors);
+    let lastarray = forceVectors.pop();
+
+    for (let i = 0; i < 7; i++) {
+      forceVectors.push(lastarray);
+    }
+
+    return {
+      playerIndex: playerIndex,
+      forceVectors,
+      negForceVectors,
+      playerCoordinate: playerCoordinates[playerIndex],
+      gateCoordinate: gateCoordinates[playerIndex],
+    };
   };
 }
 
