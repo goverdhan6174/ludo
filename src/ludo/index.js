@@ -5,7 +5,8 @@ import LudoApp from "./LudoApp";
 import LudoHomePage from "./ludoHomePage";
 
 function Ludo() {
-  const ENDPOINT = "http://127.0.0.1:4000";
+  // const ENDPOINT = "http://127.0.0.1:4000";
+  const ENDPOINT = "https://my-ludo-api.herokuapp.com/";
 
   const [isBoardLoaded, setBoardState] = useState(false);
   const [userId, setUserId] = useState("");
