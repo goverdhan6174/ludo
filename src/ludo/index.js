@@ -6,7 +6,8 @@ import LudoHomePage from "./ludoHomePage";
 
 function Ludo() {
   // const ENDPOINT = "http://127.0.0.1:4000";
-  const ENDPOINT = "https://my-ludo-api.herokuapp.com/";
+  // @TODO MOVE TO ENV
+  const ENDPOINT = "https://ludo-server-wktq.onrender.com/";
 
   const [isBoardLoaded, setBoardState] = useState(false);
   const [userId, setUserId] = useState("");
