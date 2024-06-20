@@ -1,15 +1,15 @@
 import React from "react";
 import "./styles.css";
 
-let time = 0;
+// let time = 0;
 let rows = 9;
 let columns = 9;
 let mines = 10;
 let isGameOver = false;
-let isGameStart = false;
+// let isGameStart = false;
 let isFirstClick = true;
 let total_tiles = [];
-let aux_clicked = false;
+// let aux_clicked = false;
 let flags_planted = 0;
 let timer = null;
 let timeValue = 0;
@@ -55,6 +55,7 @@ function calcTileData() {
   for (let i = 0; i < total_tiles.length; i++) {
     let total = 0;
 
+    // eslint-disable-next-line no-loop-func
     let incrTotal = (rCoord = [0, 0]) => {
       let tile = total_tiles[i + columns * rCoord[0] + rCoord[1]];
       if (tile && tile.dataset.mine === "true") total++;
@@ -534,8 +535,15 @@ function Minesweeper() {
       <footer>
         <p>
           <em>It don't include any external libraries or dependencies.</em>
-          <br /> All JavaScript code should be located in the minesweeper.js
-          file. If you are unfamiliar with the game read up on it here:{" "}
+          <br /> All JavaScript code should be located in the{" "}
+          <a
+            href="https://github.com/goverdhan6174/ludo/tree/master/src/minesweeper"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            minesweeper (Github)
+          </a>
+          . If you are unfamiliar with the game read up on it here:{" "}
           <a
             href="https://en.wikipedia.org/wiki/Minesweeper_(video_game)"
             target="_blank"
