@@ -1,0 +1,106 @@
+.minesweeper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.minesweeper .tile {
+  width: 16px;
+  height: 16px;
+  float: left;
+  background-image: url("./images/clear.png");
+}
+
+.minesweeper #difficulty-input {
+  display: none;
+}
+
+.minesweeper input {
+  width: 70px;
+}
+
+.minesweeper select {
+  border: none;
+  padding: 2px 5px;
+}
+
+.minesweeper .hidden {
+  background-image: url("./images/hidden.png");
+}
+
+.minesweeper .flag {
+  background-image: url("./images/flag.png");
+}
+
+.minesweeper .mine {
+  background-image: url("./images/mine.png");
+}
+.minesweeper .mine_hit {
+  background-image: url("./images/mine_hit.png");
+}
+.minesweeper .mine_marked {
+  background-image: url("./images/mine_marked.png");
+}
+
+.minesweeper .tile_1 {
+  background-image: url("./images/tile_1.png");
+}
+.minesweeper .tile_2 {
+  background-image: url("./images/tile_2.png");
+}
+.minesweeper .tile_3 {
+  background-image: url("./images/tile_3.png");
+}
+.minesweeper .tile_4 {
+  background-image: url("./images/tile_4.png");
+}
+.minesweeper .tile_5 {
+  background-image: url("./images/tile_5.png");
+}
+.minesweeper .tile_6 {
+  background-image: url("./images/tile_6.png");
+}
+.minesweeper .tile_7 {
+  background-image: url("./images/tile_7.png");
+}
+.minesweeper .tile_8 {
+  background-image: url("./images/tile_8.png");
+}
+
+.minesweeper .smiley {
+  margin: 0 auto;
+  margin-top: 1rem;
+  width: 26px;
+  height: 26px;
+  background-image: url("./images/face_up.png");
+}
+.minesweeper .face_down {
+  background-image: url("./images/face_down.png");
+}
+.minesweeper .face_limbo {
+  background-image: url("./images/face_limbo.png");
+}
+.minesweeper .face_lose {
+  background-image: url("./images/face_lose.png");
+}
+.minesweeper .face_win {
+  background-image: url("./images/face_win.png");
+}
+
+.minesweeper h1 {
+  text-align: center;
+}
+
+.minesweeper span {
+  margin-bottom: 0;
+}
+
+#minefield {
+  margin: 1rem auto;
+}
+
+.minesweeper footer {
+  margin-top: auto;
+}
